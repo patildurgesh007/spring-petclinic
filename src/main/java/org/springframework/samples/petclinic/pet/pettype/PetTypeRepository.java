@@ -14,23 +14,20 @@
  * limitations under the License.
  */
 
-package org.springframework.samples.petclinic.owner;
+package org.springframework.samples.petclinic.pet.pettype;
 
 import java.util.List;
-import java.util.Optional;
 
-import jakarta.annotation.Nonnull;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
 
 /**
  * Repository class for <code>PetType</code> domain objects.
  *
  * @author Patrick Baumgartner
  */
-
+@Repository
 public interface PetTypeRepository extends JpaRepository<PetType, Integer> {
 
 	/**
