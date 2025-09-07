@@ -14,6 +14,11 @@ public class PetAttributeService {
 		this.petAttributeRepository = petAttributeRepository;
 	}
 
+	/**
+	 * Map assign updated attributes to existing pet.
+	 * @param oldAttributes
+	 * @param newAttributes
+	 */
 	public void mapAttributes(PetAttribute oldAttributes, PetAttribute newAttributes) {
 		oldAttributes.setWeight(newAttributes.getWeight());
 		oldAttributes.setTemperament(newAttributes.getTemperament());

@@ -1,11 +1,16 @@
 package org.springframework.samples.petclinic.pet.pettype;
 
+import org.springframework.hateoas.EntityModel;
 import org.springframework.http.ResponseEntity;
+import org.springframework.samples.petclinic.exception.ResourceNotFoundException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
 @RequestMapping("/pettypes")
@@ -29,9 +34,15 @@ public class PetTypeController {
 	}
 
 	@GetMapping("/{petTypeId}")
-	public ResponseEntity<PetType> getPetType(@PathVariable int petTypeId) {
+	public EntityModel<PetType> getPetType(@PathVariable int petTypeId) {
 		Optional<PetType> petType = petTypeService.findById(petTypeId);
-		return petType.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+		if(petType.isEmpty()) {
+			throw new ResourceNotFoundException("Resource unavailable");
+		}
+		return EntityModel.of(petType.get(),
+			linkTo(methodOn(PetTypeController.class).getAllPetTypes()).withRel("all-pets"),
+			linkTo(methodOn(PetTypeController.class).deletePetType(petTypeId)).withRel("delete")
+		);
 	}
 
 	@PostMapping()

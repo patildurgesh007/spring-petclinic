@@ -19,4 +19,20 @@ public class GlobalExceptionHandler {
 					"Record cannot be deleted because it is referenced by other records"));
 	}
 
+	@ExceptionHandler(RecordAlreadyExistsException.class)
+	public ResponseEntity<Map<String, Object>> handleRecordAlreadyExistsException(RecordAlreadyExistsException ex) {
+		return ResponseEntity.status(HttpStatus.CONFLICT) // 409 Conflict
+			.body(Map.of("timestamp", LocalDateTime.now().toString(), "status", 409, "error", "Conflict", "message",
+				ex.getMessage()));
+	}
+
+
+	@ExceptionHandler(ResourceNotFoundException.class)
+	public ResponseEntity<Map<String, Object>> handleResourceNotFoundException(ResourceNotFoundException ex) {
+		return ResponseEntity.status(HttpStatus.NOT_FOUND) // 409 Conflict
+			.body(Map.of("timestamp", LocalDateTime.now().toString(), "status", 404, "error", "NOT FOUND", "message",
+				ex.getMessage()));
+	}
+
+
 }
