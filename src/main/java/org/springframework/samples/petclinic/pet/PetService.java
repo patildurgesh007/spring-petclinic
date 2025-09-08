@@ -6,6 +6,7 @@ import org.springframework.samples.petclinic.pet.petattribute.PetAttribute;
 import org.springframework.samples.petclinic.pet.petattribute.PetAttributeService;
 import org.springframework.samples.petclinic.pet.pettype.PetType;
 import org.springframework.samples.petclinic.pet.pettype.PetTypeRepository;
+import org.springframework.samples.petclinic.petproperty.PetPropertyService;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 
@@ -22,11 +23,14 @@ public class PetService {
 
 	private final PetAttributeService petAttributeService;
 
+	private final PetPropertyService propertyService;
+
 	public PetService(OwnerRepository ownerRepository, PetTypeRepository typeRepository,
-			PetAttributeService petAttributeService) {
+					  PetAttributeService petAttributeService, PetPropertyService propertyService) {
 		this.ownerRepository = ownerRepository;
 		this.typeRepository = typeRepository;
 		this.petAttributeService = petAttributeService;
+		this.propertyService = propertyService;
 	}
 
 	/**
@@ -75,6 +79,21 @@ public class PetService {
 		LocalDate currentDate = LocalDate.now();
 		if (pet.getBirthDate() != null && pet.getBirthDate().isAfter(currentDate)) {
 			result.rejectValue("birthDate", "typeMismatch.birthDate");
+		}
+	}
+
+	public void validateAttributes(Pet pet, BindingResult result) {
+		int maxWeight = Integer.parseInt(
+			propertyService.getProperty("pet.attribute.weight")
+		);
+		if(pet.getAttribute().getWeight() > maxWeight || pet.getAttribute().getWeight() <=0){
+			result.rejectValue("birthDate", "weight.rangeExceed");
+		}
+		int maxHeight = Integer.parseInt(
+			propertyService.getProperty("pet.attribute.height")
+		);
+		if(pet.getAttribute().getHeight() > maxHeight || pet.getAttribute().getHeight() <=0){
+			result.rejectValue("birthDate", "height.rangeExceed");
 		}
 	}
 

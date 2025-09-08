@@ -75,3 +75,11 @@ CREATE TABLE attributes (
 );
 CREATE INDEX attributes_pet_id ON attributes (pet_id);
 ALTER TABLE attributes ADD CONSTRAINT fk_attributes_pets FOREIGN KEY (pet_id) REFERENCES pets (id);
+
+CREATE TABLE pet_properties (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    property_key VARCHAR(100) NOT NULL UNIQUE,
+    property_value VARCHAR(500) NOT NULL,
+    description VARCHAR(255),
+    last_updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);

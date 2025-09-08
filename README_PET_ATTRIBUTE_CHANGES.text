@@ -1,0 +1,33 @@
+Code Changes Details
+
+1. Organize project structure. Relocate classes according to the features.
+    a. Make changes in PetController class
+    b. Introduce PetService class and copy command functionalities and operational methods into this from Controller
+    c. Restructure Pet package. Introduce PetType and PetAttribute sub packages for better project structure.
+2. Introduce PetAttribute feature along with its Service, Controller, Repository
+    a. As per requirements, Introduce PetAttribute feature newly.
+    b. New pet information like Gender, Height, Weight, Temperament added into PetAttributes.
+    c. Does not add this in PetType class. As Pet Type can be reusable for multiple pets but Height , Weight, Gender cannot.
+       This information will be Pet specific.
+3. Integrate PetAttribute within Pet class.
+    a. Used pet_id column to join both table.
+    b. Will have OneToOne mapping
+4. Modify and Create SQL schema, Data SQLs for H2 Database. to handle petAttribute related improvements.
+    a. Added table creation schema into h2/schema.sql
+    b. Added sample data entries into PetAttribute table. Modify h2/data.sql file.
+5. Introduce RestControllerAdvice to handle global exceptions
+    a. To handle global exceptions for REST call, Used RestControllerAdvice and create GlobalExceptionHandler class in
+       package org.springframework.samples.petclinic.exception.
+    b. Exceptions like DataIntegrityViolationException, RecordAlreadyExistsException, ResourceNotFoundException are
+       handled globally.
+6. Introduce Endpoints for PetType and PetAttribute
+    a. Introduce GET, PUT, POST, DELETE endpoints for Pet Attributes and Pet Type.
+    b. Pet Attributes are not very useful individually as it tightly liked with Pet.
+    c. Pet Attributes and be modified along with Pet information.
+7. Introduce Swagger for  API documentation.
+    a. Introduce swagger to REST API documentation.
+    b. URL - http://localhost:8080/swagger-ui/index.html
+8. Added JavaDoc comments
+    a. Added few javaDoc comments to explain functionality of specific methods.
+9. Added Spring HATEOAS for GET mapping to fetch PetType by its ID
+10. REST API Postman collection provided for Testing

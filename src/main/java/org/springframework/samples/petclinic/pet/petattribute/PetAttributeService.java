@@ -26,21 +26,30 @@ public class PetAttributeService {
 		oldAttributes.setHeight(newAttributes.getHeight());
 	}
 
+	/**
+	 * Save Pet Attributes
+	 * @param petAttribute
+	 */
 	public void save(PetAttribute petAttribute) {
 		this.petAttributeRepository.save(petAttribute);
 	}
 
+	/**
+	 * Pull Pet Attributes By Pet ID
+	 * @param petId
+	 * @return
+	 */
 	public PetAttribute getAttributesByPetId(int petId) {
 		return petAttributeRepository.getByPetId(petId);
 	}
 
+	/**
+	 * Remove pet attributes only if Orphan.
+	 * Will throw DataIntegrityViolation exception if case attribute is linked to any Pet
+	 * @param petId
+	 */
 	public void deletePetAttribute(int petId) {
 		PetAttribute petAttributeToDelete = petAttributeRepository.getByPetId(petId);
 		petAttributeRepository.delete(petAttributeToDelete);
 	}
-
-	public List<PetAttribute> getAll(int petId) {
-		return petAttributeRepository.findAll();
-	}
-
 }

@@ -48,7 +48,7 @@ public class PetTypeService {
 	}
 
 	/**
-	 *
+	 * Update Pet Type
 	 * @param petTypeDto
 	 * @return
 	 */

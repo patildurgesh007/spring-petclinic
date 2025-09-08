@@ -107,6 +107,7 @@ class PetController {
 		if (StringUtils.hasText(pet.getName()) && pet.isNew() && owner.getPet(pet.getName(), true) != null)
 			result.rejectValue("name", "duplicate", "already exists");
 		petService.validateBirthDate(pet, result);
+		petService.validateAttributes(pet, result);
 		if (result.hasErrors()) {
 			return VIEWS_PETS_CREATE_OR_UPDATE_FORM;
 		}
@@ -136,6 +137,7 @@ class PetController {
 			}
 		}
 		petService.validateBirthDate(pet, result);
+		petService.validateAttributes(pet, result);
 		if (result.hasErrors()) {
 			return VIEWS_PETS_CREATE_OR_UPDATE_FORM;
 		}
